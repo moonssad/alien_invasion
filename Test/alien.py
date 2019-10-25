@@ -2,8 +2,9 @@ import pygame
 from pygame.sprite import Sprite
 
 
-class alien(Sprite):
+class Alien(Sprite):
     def __init__(self,ai_setting,screen):
+        super(Alien,self).__init__()
         self.screen=screen
         self.ai_setting=ai_setting
         self.image=pygame.image.load("images/alien.bmp")
