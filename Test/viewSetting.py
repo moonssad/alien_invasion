@@ -10,3 +10,8 @@ class settings():
         self.bullet_height=15
         self.bullet_color=(60,60,60)
         self.bullects_allow=10
+        self.alien_speed_factor=1
+        self.fleet_drop_speed=10
+        self.fleet_direct=1#1右移，-1左移
+
+

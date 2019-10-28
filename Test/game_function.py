@@ -65,24 +65,35 @@ def fire_bullect(ai_setting, screen, ship, bullects):
 
 
 # 创建外星人群
-def create_fleet(ai_setting, screen, aliens):
-    alien =Alien(ai_setting,screen)
-    number_aliens_x=get_number_aliens_x(ai_setting,alien.rect.width)
-    for alien_number in range (number_aliens_x):
-        create_alien(ai_setting,screen,aliens,alien_number)
+def create_fleet(ai_setting, screen, ship, aliens):
+    alien = Alien(ai_setting, screen)
+    number_aliens_x = get_number_aliens_x(ai_setting, alien.rect.width)
+    number_rows = get_number_rows(ai_setting, ship.rect.height, alien.rect.height)
+    for number_row in range(number_rows):
+        for alien_number in range(number_aliens_x):
+            create_alien(ai_setting, screen, aliens, alien_number,number_row)
 
-def get_number_aliens_x(ai_setting,alien_width):
+
+def get_number_aliens_x(ai_setting, alien_width):
     available_space_x = ai_setting.screen_width - 2 * alien_width
     number_aliens_x = int(available_space_x / (2 * alien_width))
     return number_aliens_x
 
-def create_alien(ai_setting,screen,aliens,aliens_nuber):
+
+def create_alien(ai_setting, screen, aliens, aliens_number, row_number):
     Alien1 = Alien(ai_setting, screen)
-    alien_width=Alien1.rect.width
-    Alien1.x = alien_width + 2 * alien_width * aliens_nuber
+    alien_width = Alien1.rect.width
+    Alien1.x = alien_width + 2 * alien_width * aliens_number
     Alien1.rect.x = Alien1.x
+    Alien1.rect.y = Alien1.rect.height + 2 * Alien1.rect.height * row_number
+
     aliens.add(Alien1)
 
 
+def get_number_rows(ai_setting, ship_height, alien_height):
+    available_space_y = ai_setting.screen_height - ship_height - 3 * alien_height
+    number_rows = int(available_space_y / (2 * alien_height))
+    return number_rows
 
-
+def update_aliens(aliens):
+    aliens.update()
