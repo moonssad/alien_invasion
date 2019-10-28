@@ -22,7 +22,7 @@ def run_game():
     play_button = button(ai_setting, screen, "PLAY")
     sb = scoreboard(ai_setting, screen, stats)
     while True:
-        gf.check_events(ai_ship, screen, ai_setting, bullects, stats, play_button, ai_alien)
+        gf.check_events(ai_ship, screen, ai_setting, bullects, stats, play_button, ai_alien,sb)
         gf.updata_screen(ai_setting, screen, ai_ship, bullects, ai_alien, stats, play_button, sb)
 
         if stats.game_active:

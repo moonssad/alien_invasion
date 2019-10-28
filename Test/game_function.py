@@ -7,20 +7,23 @@ from Test.bullet import bullet
 from Test.alien import Alien
 
 
-def check_play_button(ai_setting, screen, stats, play_button, ship, aliens, bullects, mouse_x, mouse_y):
+def check_play_button(ai_setting, screen, stats, play_button, ship, aliens, bullects, mouse_x, mouse_y,sb):
     button_clicked = play_button.screen_rect.collidepoint(mouse_x, mouse_y)
     if button_clicked and not stats.game_active:
         ai_setting.initialize_dynamic_settings()
         pygame.mouse.set_visible(False)
         stats.reset_ststs()
         stats.game_active = True
+        sb.prep_score()
+        sb.prep_hight_socre()
+        sb.prep_level()
         aliens.empty()
         bullects.empty()
         create_fleet(ai_setting, screen, ship, aliens)
         ship.center_ship()
 
 
-def check_events(ship, screen, ai_setting, bullects, stats, play_button, aliens):
+def check_events(ship, screen, ai_setting, bullects, stats, play_button, aliens,sb):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -30,7 +33,7 @@ def check_events(ship, screen, ai_setting, bullects, stats, play_button, aliens)
             check_up_event(event, ship)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            check_play_button(ai_setting, screen, stats, play_button, ship, aliens, bullects, mouse_x, mouse_y)
+            check_play_button(ai_setting, screen, stats, play_button, ship, aliens, bullects, mouse_x, mouse_y,sb)
 
 
 def check_down_event(event, ship, ai_setting, screen, bullects):
@@ -87,10 +90,14 @@ def check_bullet_alien_collisions(bullets, aliens, ai_setting, screen, ship, sta
         for aliens in collisions.values():
             stats.score += ai_setting.alien_points
             sb.prep_score()
+        check_hight_score(stats,sb)
+
     if len(aliens) == 0:
         bullets.empty()
         ai_setting.increase_speed()
         create_fleet(ai_setting, screen, ship, aliens)
+        stats.level+=1
+        sb.prep_score()
 
 
 def fire_bullect(ai_setting, screen, ship, bullects):
@@ -170,3 +177,9 @@ def check_fleet_edges(ai_setting, aliens):
         if alien.check_edges():
             change_fleet_direction(ai_setting, aliens)
             break
+
+
+def check_hight_score(stats, sb):
+    if stats.score > stats.hight_score:
+        stats.hight_score = stats.score
+        sb.prep_hight_socre()
