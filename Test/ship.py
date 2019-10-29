@@ -1,8 +1,9 @@
 import pygame
+from pygame.sprite import Sprite
 
-
-class ship():
+class ship(Sprite):
     def __init__(self, ai_seeting, screen):
+        super(ship,self).__init__()
         self.screen = screen
         self.image = pygame.image.load('images/ship.bmp')
         self.rect = self.image.get_rect()
