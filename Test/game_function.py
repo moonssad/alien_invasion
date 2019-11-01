@@ -5,6 +5,7 @@ import pygame
 
 from Test.bullet import bullet
 from Test.alien import Alien
+import Test.ScoreSave as SV
 
 
 def check_play_button(ai_setting, screen, stats, play_button, ship, aliens, bullects, mouse_x, mouse_y, sb):
@@ -184,4 +185,6 @@ def check_fleet_edges(ai_setting, aliens):
 def check_hight_score(stats, sb):
     if stats.score > stats.hight_score:
         stats.hight_score = stats.score
+        SV.write_score(stats.hight_score)
         sb.prep_hight_socre()
+

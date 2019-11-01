@@ -7,6 +7,7 @@ from Test.scoreboard import scoreboard
 from Test.ship import ship
 from Test.viewSetting import settings
 import Test.game_function as gf
+import Test.ScoreSave as sv
 
 
 def run_game():
@@ -21,6 +22,8 @@ def run_game():
     stats = game_stats(ai_setting)
     play_button = button(ai_setting, screen, "PLAY")
     sb = scoreboard(ai_setting, screen, stats)
+    savedScore =int(sv.read_score())
+    stats.hight_score=savedScore
     while True:
         gf.check_events(ai_ship, screen, ai_setting, bullects, stats, play_button, ai_alien, sb)
         gf.updata_screen(ai_setting, screen, ai_ship, bullects, ai_alien, stats, play_button, sb)
